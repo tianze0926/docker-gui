@@ -1,11 +1,11 @@
 FROM archlinux/archlinux AS initial
 
-RUN pacman --noconfirm -Syu
+RUN pacman --noconfirm -Syu &&
+    pacman --noconfirm -S git base-devel
 RUN useradd --create-home --no-user-group abc &&\
     echo 'abc ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers
 USER abc
-RUN sudo pacman --noconfirm -S git base-devel &&\
-    cd /tmp &&\
+RUN cd /tmp &&\
     git clone https://aur.archlinux.org/yay-bin.git &&\
     cd yay-bin &&\
     makepkg --noconfirm -si &&\
