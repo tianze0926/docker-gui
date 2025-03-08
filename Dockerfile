@@ -10,7 +10,6 @@ RUN cd /tmp &&\
     cd yay-bin &&\
     makepkg --noconfirm -si &&\
     cd .. && rm -rf yay-bin
-USER root
 
 RUN yay --noconfirm -S \
         supervisor alacritty \
@@ -18,23 +17,21 @@ RUN yay --noconfirm -S \
         xf86-video-amdgpu mesa vulkan-radeon \
         noto-fonts noto-fonts-cjk noto-fonts-emoji
 
-RUN pacman --noconfirm -S pulseaudio &&\
-    useradd pulse
+RUN yay --noconfirm -S pulseaudio &&\
+    sudo useradd pulse
 
-USER abc
 RUN yay --noconfirm -S feishu-bin
 RUN yay --noconfirm -S corplink-bin &&\
     mkdir -p ~/.config/Corplink
 RUN yay --noconfirm -S wemeet-bin
-USER root
 
 COPY /root /
 COPY --chown=abc /config /home/abc
 
 # clean up
-RUN echo '' > /etc/sudoers
-RUN yes | pacman -Scc &&\
+RUN yes | sudo pacman -Scc &&\
     yes | yay -Scc
+RUN echo '' | sudo tee /etc/sudoers
 
 
 FROM scratch
