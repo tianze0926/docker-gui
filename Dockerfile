@@ -1,6 +1,6 @@
 FROM archlinux/archlinux AS initial
 
-RUN pacman --noconfirm -Syu &&
+RUN pacman --noconfirm -Syu &&\
     pacman --noconfirm -S git base-devel
 RUN useradd --create-home --no-user-group abc &&\
     echo 'abc ALL=(ALL:ALL) NOPASSWD: ALL' > /etc/sudoers
