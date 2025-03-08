@@ -1,0 +1,25 @@
+services:
+  app:
+    image: registry.cn-beijing.aliyuncs.com/tianze0926/gui
+    container_name: gui
+    volumes:
+      - /tmp/.X11-unix/X114:/tmp/.X11-unix/X0
+      - config:/home/abc/.config
+      - service-config:/opt/apps/com.volcengine.feilian
+      - v2rayn-config:/opt/v2rayn-bin/guiConfigs
+    ports:
+      - 127.0.0.1:31080:31081
+      # v2rayn
+      # - 127.0.0.1:1080:10808
+      # - 127.0.0.1:1081:10808
+    devices:
+      - /dev/dri/
+      - /dev/net/tun
+    cap_add:
+      - NET_ADMIN
+    hostname: laptop
+
+volumes:
+  config:
+  service-config:
+  v2rayn-config:
